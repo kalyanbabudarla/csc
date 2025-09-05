@@ -1,0 +1,10 @@
+1. Find the top 5 maximum sales values.
+2. Calculate the sales difference between the maximum and minimum values.
+3.Find the index (row number) of the highest sale.
+4.Normalize the sales column (0 to 1 range).
+5.Get the unique sales values.
+6.Filter and get all sales greater than 10,000.
+7. Reshape the sales array into 2D (if total values allow).
+8. Check if all sales are above zero.
+9.Get the shape of the dataset (rows and columns).
+10.Find the maximum sale value using NumPy.

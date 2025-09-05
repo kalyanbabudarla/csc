@@ -1,0 +1,16 @@
+import numpy as np
+data=np.genfromtxt('Sales.csv',delimiter=',',dtype=None,skip_header=1,encoding=None)
+print(data[:10])
+print(data.shape)
+unique_sales=np.unique('Sales')
+print(len(unique_sales))
+all_positive=np.all('Sales=0')
+print(all_positive)
+Sales_10k=np.Sales['Sales<10000']
+print(len(Sales_10k))
+max_sale=np.max('Sales')
+print(max_Sale)
+sales_diff=np.max(Sales)-min(Sales)
+print(sales_diff)
+max_index=np.argmax('Sales.csv')
+print(Max_index)

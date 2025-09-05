@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalyanbabu Darla - Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #e0eaff 0%, #fefcea 100%);
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glass card for header */
+        .glass-card {
+            background: rgba(255,255,255,0.20);
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.22);
+            backdrop-filter: blur(9px);
+            border-radius: 30px;
+            padding: 3rem 2rem 2.5rem 2rem;
+            margin: 2rem auto 1rem auto;
+            max-width: 630px;
+            text-align: center;
+            border: 1.5px solid rgba(255,255,255,0.32);
+            position: relative;
+        }
+        .profile-img {
+            width: 120px; height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 2px 16px rgba(52,77,255,0.1);
+            margin-bottom: 1rem;
+            background: #0d6efd;
+        }
+        /* Social media buttons */
+        .social-links { margin-top: 1rem; }
+        .social-btn {
+            color: #fff; background: #0077b5;
+            border: none; border-radius: 2rem;
+            display: inline-flex; align-items: center;
+            padding: 7px 17px; margin: 0 7px;
+            font-size: 1rem;
+            transition: background .2s, opacity .16s;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(13,110,253,0.07);
+            position: relative;
+        }
+        .social-btn.email { background: #198754;}
+        .social-btn:hover { opacity: 0.9; transform: scale(1.05);}
+        .social-btn i { margin-right: 8px; font-size: 1.2em;}
+        @media (max-width: 600px) {
+            .glass-card { padding: 2.2rem 0.6rem 2.1rem 0.6rem;}
+        }
+
+        /* Navbar and highlight */
+        .navbar-nav .nav-link {
+            transition: background .2s, color .2s;
+        }
+        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link:hover {
+            background-color: #0d6efd;
+            color: #fff !important;
+            border-radius: .25rem;
+            font-weight: bold;
+        }
+
+        /* Section container shimmer border */
+        .section-container {
+            padding: 2.4rem 1.4rem;
+            margin-bottom: 35px;
+            position: relative;
+            background: rgba(255,255,255,0.93);
+            border-radius: 20px;
+            box-shadow: 0 4px 30px rgba(30,55,153,0.07);
+            z-index: 2;
+            /* Shimmer border */
+            border: 3px solid transparent;
+            background-clip: padding-box;
+        }
+        .section-container:before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            inset: -3px;
+            border-radius: 20px;
+            padding: 0;
+            background: linear-gradient(120deg, #0d6efd, #db7eed, #30cfd0, #f9e380, #0d6efd);
+            background-size: 400% 400%;
+            animation: borderflow 7s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes borderflow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .section-title {
+            border-left: 5px solid #0d6efd;
+            padding-left: 10px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 1.4rem;
+            letter-spacing: 0.7px;
+        }
+
+        /* Floating scroll-to-top button */
+        #toTop {
+            display: none;
+            position: fixed;
+            bottom: 38px;
+            right: 26px;
+            z-index: 990;
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            border-radius: 60%;
+            padding: 14px 16px 11px 16px;
+            font-size: 2rem;
+            box-shadow: 0 8px 22px 0 rgba(13,110,253,0.10);
+            transition: background .2s, transform .15s;
+        }
+        #toTop:hover { background: #1436a8; transform: scale(1.12);}
+        
+        /* Section reveal animation */
+        section {
+            opacity: 0; transform: translateY(38px); 
+            transition: opacity 0.8s cubic-bezier(.33,1.33,.62,1), transform 0.75s cubic-bezier(.33,1.33,.62,1);
+        }
+        section.visible { opacity: 1; transform: translateY(0);}
+        /* Typing Effect */
+        .typing-title { font-size:1.15em; min-height:1.6em; font-family:monospace; background:rgba(0,0,0,0.04); display:inline;}
+        /* Skills grid */
+        .skills-grid { display:flex; flex-wrap:wrap; gap:13px; }
+        .skill-badge {
+            display: flex; align-items: center;
+            background: #0d6efd;
+            color: #fff;
+            font-size: 1em;
+            padding: 7px 16px;
+            border-radius: 2rem;
+            margin:5px 3px;
+            box-shadow: 0 2px 14px rgba(13,110,253,0.08);
+            opacity: 0; transform: scale(0.7);
+            transition: all 0.30s cubic-bezier(.33,1.2,.62,1);
+            cursor: pointer;
+            border: none;
+        }
+        .skill-badge i { margin-right: 7px;}
+        .skill-badge.visible { opacity: 1; transform: scale(1.09) rotate(-3deg); animation: popIn .35s;}
+        .skill-badge:hover { box-shadow: 0 6px 32px rgba(13,110,253,0.14); transform: scale(1.17) rotate(3deg);}
+        @keyframes popIn { 0%{transform:scale(0.5);} 70%{transform:scale(1.14);} 100%{transform:scale(1.09);} }
+
+        footer {
+            background:#212529; color: #fff;
+            text-align:center;
+            padding: 11px 0;
+            margin-top:30px;
+            font-size:1em;
+            letter-spacing:0.5px; }
+        html {scroll-behavior:smooth;}
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Kalyanbabu Darla</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#objective">Objective</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#career">Career</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#roles">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#achievements">Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#traits">Traits</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- HEADER with glass-card -->
+    <div class="glass-card mt-4 mb-3">
+        <img src="https://ui-avatars.com/api/?name=Kalyanbabu+Darla&size=256&background=0d6efd&color=fff" alt="Profile Image" class="profile-img mb-2">
+        <h1>Kalyanbabu Darla</h1>
+        <div class="typing-title text-dark"></div>
+        <div class="social-links">
+            <a class="social-btn" href="https://www.linkedin.com/in/kalyanbabudarla" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>LinkedIn
+            </a>
+            <a class="social-btn email" href="mailto:darlakalyanbabu@gmail.com" title="Email">
+                <i class="fa fa-envelope"></i>Email
+            </a>
+        </div>
+        <p class="text-secondary" style="margin-top:1.2rem; font-size:1.02em;">Mobile: +91 8144481100</p>
+    </div>
+
+    <!-- OBJECTIVE -->
+    <section class="container section-container" id="objective">
+        <div class="section-title">Objective</div>
+        <p>Seeking a challenging position as a <b>Quality Engineer in the automotive industry</b> where I can apply my technical knowledge, quality inspection skills, and process improvement abilities to support high standards of product quality, contribute to continuous improvement initiatives, and drive customer satisfaction.</p>
+    </section>
+
+    <!-- CAREER SUMMARY -->
+    <section class="container section-container" id="career">
+        <div class="section-title">Career Summary</div>
+        <ul>
+            <li><b>Boson Motors</b> – Quality Technician & Mechanical Technician (EV)</li>
+            <li><b>Vishnu Cars (Maruti Suzuki)</b> – Automobile Technician</li>
+            <li><b>VMS Car Care</b> – Automobile Technician</li>
+            <li><b>IIT Madras</b> – Apprenticeship: Vehicle Maintenance</li>
+            <li><b>Curro Motors</b> – Internship Trainee (Car Maintenance)</li>
+            <li><b>Mahindra Pride School</b> – Automobile Assembly Technician (Training)</li>
+        </ul>
+    </section>
+
+    <!-- ROLES & RESPONSIBILITIES -->
+    <section class="container section-container" id="roles">
+        <div class="section-title">Roles & Responsibilities</div>
+        <ul>
+            <li>In-process quality control and maintenance of process documentation</li>
+            <li>First Part, In-Process, and Last Part inspection for quality standards</li>
+            <li>Pre-Dispatch Inspection (PDI) for final product quality</li>
+            <li>Preparation of PPAP documentation and updates to FMEA, Control Plans</li>
+            <li>Root cause analysis and implementation of CAPA measures</li>
+        </ul>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="container section-container" id="skills">
+        <div class="section-title">Key Skills</div>
+        <div class="skills-grid">
+            <span class="skill-badge"><i class="fa-solid fa-wrench"></i>MS-Office></span>
+            <span class="skill-badge"><i class="fa-solid fa-vial"></i>Die Penetrant Test</span>
+            <span class="skill-badge"><i class="fa-solid fa-chart-pie"></i>7 QC Tools</span>
+            <span class="skill-badge"><i class="fa-solid fa-file-circle-check"></i>PPAP</span>
+            <span class="skill-badge"><i class="fa-solid fa-file-shield"></i>FMEA</span>
+            <span class="skill-badge"><i class="fa-solid fa-drafting-compass"></i>GD&T</span>
+            <span class="skill-badge"><i class="fa-solid fa-lightbulb"></i>Kaizen</span>
+            <span class="skill-badge"><i class="fa-brands fa-microsoft"></i>MIG Welding</span>
+            <span class="skill-badge"><i class="fa-solid fa-cube"></i>AutoCAD</span>
+            <span class="skill-badge"><i class="fa-brands fa-python"></i>Python</span>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="container section-container" id="projects">
+        <div class="section-title">Projects in Automotive</div>
+        <ul>
+            <li>Workshop Practices – Basic manufacturing and fitting techniques</li>
+            <li>Battery Management System (BMS) – Analysis of cooling methods in EVs</li>
+        </ul>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="container section-container" id="achievements">
+        <div class="section-title">Achievements</div>
+        <ul>
+            <li>Supported quality inspection & mechanical fitment for EV rollout at Boson Motors</li>
+            <li>Reduced rework and rejection rates through effective quality checks</li>
+            <li>Maintained campus buses at IIT Madras during 2-year apprenticeship</li>
+        </ul>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="container section-container" id="education">
+        <div class="section-title">Education</div>
+        <ul>
+            <li>B.E. Automobile Engineering – Vels University (Pursuing, 2026)</li>
+            <li>ITI – Mechanic Motor Vehicle, Govt. ITI, Chennai (2019)</li>
+            <li>Diploma – Civil Engineering, Meenakshi Krishnan Polytechnic College (2016)</li>
+        </ul>
+    </section>
+
+    <!-- PERSONALITY TRAITS -->
+    <section class="container section-container" id="traits">
+        <div class="section-title">Personality Traits</div>
+        <ul>
+            <li>Leadership & responsibility in team environments</li>
+            <li>Strong communication skills</li>
+            <li>Highly punctual and disciplined</li>
+        </ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="container section-container" id="contact">
+        <div class="section-title">Contact</div>
+        <p style="font-size:1.11em;">
+            <a class="social-btn email" href="mailto:darlakalyanbabu@gmail.com" title="Email">
+                <i class="fa fa-envelope"></i> darlakalyanbabu@gmail.com
+            </a>
+            <br><br>
+            <a class="social-btn" href="https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i> linkedin.com/in/YOUR-LINKEDIN-USERNAME
+            </a>
+            <br><br>
+            Mobile: +91 8144481100
+        </p>
+    </section>
+
+    <!-- Scroll-to-top floating button -->
+    <button onclick="window.scrollTo({top:0,behavior:'smooth'});" id="toTop" title="Go to top"><i class="fa fa-angle-up"></i></button>
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Kalyanbabu Darla | Designed with Bootstrap & Pro Effects</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Typing job title effect JS -->
+    <script>
+        // Typing effect for header job title
+        document.addEventListener('DOMContentLoaded', function() {
+            let text = "Quality Engineer | EV & Automobile Technician";
+            let i = 0;
+            let typingDiv = document.querySelector('.typing-title');
+            function typeChar() {
+                if(i <= text.length) {
+                    typingDiv.innerHTML = text.slice(0,i) +'<span style="color:#0d6efd;font-weight:bold;">|</span>';
+                    i++; setTimeout(typeChar, 70);
+                } else {
+                    typingDiv.innerHTML = text;
+                }
+            }
+            typeChar();
+        });
+    </script>
+    <!-- Reveal Animations + skills pop-in -->
+    <script>
+        // Section fade-in and skills pop effect
+        document.addEventListener('DOMContentLoaded', function() {
+            let sections = document.querySelectorAll('section');
+            let observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                        if(entry.target.id === "skills") {
+                            setTimeout(()=>{
+                                document.querySelectorAll('.skill-badge').forEach((badge,i) => {
+                                    setTimeout(()=>badge.classList.add('visible'), 100*i);
+                                });
+                            },300);
+                        }
+                    }
+                });
+            }, { threshold: 0.13 });
+            sections.forEach(section => observer.observe(section));
+        });
+        // Navbar highlight on scroll
+        window.addEventListener('scroll', function() {
+            let sections = document.querySelectorAll('section');
+            let navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            let scrollPos = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+            sections.forEach((sec, idx) => {
+                let top = sec.offsetTop - 90;
+                let bottom = top + sec.offsetHeight;
+                if (scrollPos >= top && scrollPos < bottom) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    if (navLinks[idx]) navLinks[idx].classList.add('active');
+                }
+                // At bottom of page
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    navLinks[navLinks.length-2].classList.add('active');
+                }
+            });
+        });
+        // Navbar click smooth scroll
+        document.querySelectorAll('.navbar-nav .nav-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                let target = document.querySelector(this.getAttribute('href'));
+                if (target) window.scrollTo({ top: target.offsetTop - 76, behavior: 'smooth' });
+            });
+        });
+        // Show scroll-to-top button
+        window.onscroll = function() {
+            let btn = document.getElementById("toTop");
+            if (window.scrollY > 380) btn.style.display = "block";
+            else btn.style.display = "none";
+        }
+    </script>
+</body>
+</html>

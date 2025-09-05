@@ -1,0 +1,12 @@
+1.Load the dataset and display the first 5 rows
+2.Check for missing values in the dataset
+3.Drop the Outlet_Establishment_Year column from the dataset.
+4.Create a new column Price_per_Weight by dividing Item_MRP by Item_Weight. Then, find the maximum and minimum values in this new column.
+5.Filter the dataset to include only rows where Item_Type contains the word "Snack."
+6.Group the dataset by Outlet_Type and calculate the average Sales for each group.
+7.Filter the dataset to display only Low Fat items with Sales greater than 1000.
+8.Calculate the cumulative sum of Sales for each Outlet_Type and plot it.
+9.Filter the dataset to include only rows where Item_Visibility is above the median and Item_Fat_Content is 'Low Fat'.
+10.Create a pivot table that shows both the average and total Sales for each Outlet_Type and Item_Type.
+11.Aggregate the dataset to show the average Sales for each combination of Item_Fat_Content and Outlet_Location_Type.
+12.Assume the data has a Date column. Plot the Sales over time to identify trends.
